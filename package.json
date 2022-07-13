@@ -4,9 +4,9 @@
   "description": "华为云action统一鉴权",
   "main": "lib/main.js",
   "scripts": {
-    "build": "tsc",  
-    "run": "node ./lib/main.js",  
-    "package": "ncc build --source-map --license licenses.txt",  
+    "build": "tsc",
+    "run": "node ./lib/main.js",
+    "package": "ncc build --source-map --license licenses.txt",
     "lint-create": "eslint --init",
     "lint": "eslint src",
     "format": "prettier --write **/*.ts",
@@ -41,5 +41,8 @@
     "ts-node": "^10.8.2",
     "ts-node-dev": "^2.0.0",
     "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "@actions/core": "^1.9.0"
   }
 }
