@@ -127,7 +127,7 @@ describe('test whether the projectId parameter is valid', () => {
 describe('test whether the region parameter is valid', () => {
     const testCase = [
         { region: 'cn-north-4', result: true },
-        { region: '', result: true },
+        { region: '', result: false },
         { region: 'cnnorth-4', result: false },
         { region: 'cn-north4', result: false },
         { region: 'cn-north-4f', result: false },

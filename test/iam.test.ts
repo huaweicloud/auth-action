@@ -9,9 +9,9 @@ jest.mock('@huaweicloud/huaweicloud-sdk-core', () => {
     return {
         GlobalCredentials: jest.fn(() => ({
             withAk: jest.fn(() => ({
-                withSk: mockWithSk
-            }))
-        }))
+                withSk: mockWithSk,
+            })),
+        })),
     };
 });
 
@@ -23,14 +23,14 @@ jest.mock('@huaweicloud/huaweicloud-sdk-iam', () => {
                     withEndpoint: jest.fn(() => ({
                         withOptions: jest.fn(() => ({
                             build: jest.fn(() => ({
-                                showPermanentAccessKey: mockShowPermanentAccessKey
-                            }))
-                        }))
-                    }))
-                }))
-            }))
+                                showPermanentAccessKey: mockShowPermanentAccessKey,
+                            })),
+                        })),
+                    })),
+                })),
+            })),
         },
-        ShowPermanentAccessKeyRequest: jest.fn()
+        ShowPermanentAccessKeyRequest: jest.fn(),
     };
 });
 
@@ -46,7 +46,7 @@ describe('test swr create secret', () => {
             accessKey: '1234567890&*',
             secretKey: '123456789012345678901234567890',
             projectId: '',
-            region: 'cn-north-4'
+            region: 'cn-north-4',
         };
         expect(await iam.showPermanentAccessKey(input)).toBe(true);
         expect(mockWithSk).toHaveBeenCalled();
@@ -60,7 +60,7 @@ describe('test swr create secret', () => {
             accessKey: '1234567890&*',
             secretKey: '123456789012345678901234567890',
             projectId: '',
-            region: 'cn-north-4'
+            region: 'cn-north-4',
         };
         expect(await iam.showPermanentAccessKey(input)).toBe(false);
         expect(core.setFailed).toHaveBeenCalledTimes(1);

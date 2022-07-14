@@ -54,5 +54,5 @@ export function checkProjectId(projectId: string): boolean {
  * @returns
  */
 export function checkRegion(region: string): boolean {
-    return region ? REGION_REG.test(region) : true;
+    return REGION_REG.test(region);
 }

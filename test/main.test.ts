@@ -3,47 +3,60 @@ import * as main from '../src/main';
 import * as utils from '../src/utils';
 import * as context from '../src/context';
 import * as iam from '../src/iam';
+import * as credential from '../src/credential';
 import * as core from '@actions/core';
 
 jest.mock('../src/context');
-jest.mock('../src/iam');
+jest.mock('../src/credential');
 jest.mock('@actions/core');
 
-test('mock checkInputs return true', async () => {
-    jest.spyOn(utils, 'checkInputs').mockReturnValue(true);
-    await main.run();
+describe('mock main', () => {
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
 
-    expect(context.getInputs).toHaveBeenCalledTimes(1);
+    test('mock checkInputs and showPermanentAccessKey return true', async () => {
+        jest.spyOn(utils, 'checkInputs').mockReturnValue(true);
+        jest.spyOn(iam, 'showPermanentAccessKey').mockReturnValue(Promise.resolve(true));
 
-    expect(utils.checkInputs).toHaveBeenCalledTimes(1);
+        await main.run();
 
-    expect(iam.showPermanentAccessKey).toHaveBeenCalledTimes(1);
+        expect(context.getInputs).toHaveBeenCalledTimes(1);
 
-    //   expect(auth.configCciAuth).toHaveBeenCalled();
-    //   expect(auth.configCciAuth).toHaveBeenCalledTimes(1);
+        expect(utils.checkInputs).toHaveBeenCalledTimes(1);
 
-    //   expect(cci.createNamespace).toHaveBeenCalled();
-    //   expect(cci.createNamespace).toHaveBeenCalledTimes(1);
+        expect(iam.showPermanentAccessKey).toHaveBeenCalledTimes(1);
 
-    //   expect(cci.createOrUpdateDeployment).toHaveBeenCalled();
-    //   expect(cci.createOrUpdateDeployment).toHaveBeenCalledTimes(1);
-});
+        expect(credential.exportCredentials).toHaveBeenCalledTimes(1);
+    });
 
-test('mock checkInputs return false', async () => {
-    jest.spyOn(utils, 'checkInputs').mockReturnValue(false);
-    await main.run();
+    test('mock checkInputs return true and showPermanentAccessKey return false', async () => {
+        jest.spyOn(utils, 'checkInputs').mockReturnValue(true);
+        jest.spyOn(iam, 'showPermanentAccessKey').mockReturnValue(Promise.resolve(false));
+        await main.run();
 
-    expect(context.getInputs).toHaveBeenCalledTimes(1);
+        expect(context.getInputs).toHaveBeenCalledTimes(1);
 
-    expect(utils.checkInputs).toHaveBeenCalledTimes(1);
-    expect(core.setFailed).toHaveBeenNthCalledWith(1, 'input parameters is not correct.');
+        expect(utils.checkInputs).toHaveBeenCalledTimes(1);
 
-    expect(iam.showPermanentAccessKey).not.toHaveBeenCalled();
-    //   expect(install.downloadCciIamAuthenticator).not.toHaveBeenCalled();
+        expect(iam.showPermanentAccessKey).toHaveBeenCalledTimes(1);
+        expect(core.setFailed).toHaveBeenNthCalledWith(1, 'AK/SK is not found.');
 
-    //   expect(auth.configCciAuth).not.toHaveBeenCalled();
+        expect(credential.exportCredentials).not.toHaveBeenCalled();
+    });
 
-    //   expect(cci.createNamespace).not.toHaveBeenCalled();
+    test('mock checkInputs return false', async () => {
+        jest.spyOn(utils, 'checkInputs').mockReturnValue(false);
+        jest.spyOn(iam, 'showPermanentAccessKey').mockReturnValue(Promise.resolve(false));
+        await main.run();
 
-    //   expect(cci.createOrUpdateDeployment).not.toHaveBeenCalled();
+        expect(context.getInputs).toHaveBeenCalledTimes(1);
+
+        expect(utils.checkInputs).toHaveBeenCalledTimes(1);
+        expect(core.setFailed).toHaveBeenNthCalledWith(1, 'input parameters is not correct.');
+
+        expect(iam.showPermanentAccessKey).not.toHaveBeenCalled();
+
+        expect(credential.exportCredentials).not.toHaveBeenCalled();
+    });
 });

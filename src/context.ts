@@ -12,7 +12,7 @@ export function getInputs(): Inputs {
         accessKey: core.getInput('access_key', { required: true }),
         secretKey: core.getInput('secret_key', { required: true }),
         projectId: core.getInput('project_id', { required: false }),
-        region: core.getInput('region', { required: false }),
+        region: core.getInput('region', { required: true }),
     };
 }
 
