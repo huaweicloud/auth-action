@@ -2,19 +2,19 @@
 name: 'Authenticate to Huawei Cloud'
 description: 'Authenticate to Huawei Cloud from GitHub Actions via AK/SK.'
 inputs:
-  access_key:
+  access_key_id:
     description: "Access key id"
     required: true
-  secret_key:
+  secret_access_key:
     description: "Secret access key"
     required: true
+  region:
+  description: '华为云区域，可以在华为云我的凭证获取'
+  required: true
+  default: 'cn-north-4'
   project_id:
     description: "项目ID，可以在华为云我的凭证获取"
     required: false
-  region:
-    description: 'Region'
-    required: false
-    default: 'cn-north-4'
 branding:
   icon: 'cloud'
   color: 'red'

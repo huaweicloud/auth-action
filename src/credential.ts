@@ -6,10 +6,10 @@ import * as context from './context';
  */
 export async function exportCredentials(inputs: context.Inputs) {
     core.setSecret(inputs.accessKey);
-    core.exportVariable('HUAWEI_CLOUD_ACCESS_KEY', inputs.accessKey);
+    core.exportVariable('HUAWEI_CLOUD_ACCESS_KEY_ID', inputs.accessKey);
 
     core.setSecret(inputs.secretKey);
-    core.exportVariable('HUAWEI_CLOUD_SECRET_KEY', inputs.secretKey);
+    core.exportVariable('HUAWEI_CLOUD_SECRET_ACCESS_KEY', inputs.secretKey);
 
     core.setSecret(inputs.region);
     core.exportVariable('HUAWEI_CLOUD_REGION', inputs.region);
