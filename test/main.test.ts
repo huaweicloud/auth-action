@@ -2,9 +2,11 @@ import * as main from '../src/main';
 
 import * as utils from '../src/utils';
 import * as context from '../src/context';
+import * as iam from '../src/iam';
 import * as core from '@actions/core';
 
 jest.mock('../src/context');
+jest.mock('../src/iam');
 jest.mock('@actions/core');
 
 test('mock checkInputs return true', async () => {
@@ -15,8 +17,7 @@ test('mock checkInputs return true', async () => {
 
     expect(utils.checkInputs).toHaveBeenCalledTimes(1);
 
-    //   expect(install.downloadCciIamAuthenticator).toHaveBeenCalled();
-    //   expect(install.downloadCciIamAuthenticator).toHaveBeenCalledTimes(1);
+    expect(iam.showPermanentAccessKey).toHaveBeenCalledTimes(1);
 
     //   expect(auth.configCciAuth).toHaveBeenCalled();
     //   expect(auth.configCciAuth).toHaveBeenCalledTimes(1);
@@ -37,6 +38,7 @@ test('mock checkInputs return false', async () => {
     expect(utils.checkInputs).toHaveBeenCalledTimes(1);
     expect(core.setFailed).toHaveBeenNthCalledWith(1, 'input parameters is not correct.');
 
+    expect(iam.showPermanentAccessKey).not.toHaveBeenCalled();
     //   expect(install.downloadCciIamAuthenticator).not.toHaveBeenCalled();
 
     //   expect(auth.configCciAuth).not.toHaveBeenCalled();
