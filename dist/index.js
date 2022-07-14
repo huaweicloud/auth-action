@@ -158,7 +158,6 @@ function checkInputs(inputs) {
         core.info('region is not correct.');
         return false;
     }
-    core.info('The pypi-operation-type value can only be install or upload');
     return true;
 }
 exports.checkInputs = checkInputs;
