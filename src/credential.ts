@@ -1,10 +1,10 @@
 import * as core from '@actions/core';
-import * as context from './context';
+import {Inputs}  from './context';
 /**
  * 华为云凭证设置为加密的环境变量
  * @param inputs
  */
-export async function exportCredentials(inputs: context.Inputs) {
+export async function exportCredentials(inputs: Inputs) {
     core.setSecret(inputs.accessKey);
     core.exportVariable('HUAWEI_CLOUD_ACCESS_KEY_ID', inputs.accessKey);
 
