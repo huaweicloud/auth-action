@@ -31,7 +31,7 @@ export async function showPermanentAccessKey(inputs: context.Inputs): Promise<bo
     request.accessKey = inputs.accessKey;
     const result = await client.showPermanentAccessKey(request);
     console.log(result);
-    if (result.httpStatusCode != 200) {
+    if (result.httpStatusCode !== 200) {
         core.setFailed('Show Permanent Access Key Failed.');
         return false;
     }
@@ -50,7 +50,7 @@ export async function keystoneShowProject(inputs: context.Inputs): Promise<boole
     const client = getClientBuilder(inputs);
     const result = await client.keystoneShowProject();
     console.log(result);
-    if (result.httpStatusCode != 200) {
+    if (result.httpStatusCode !== 200) {
         core.setFailed('Keystone Show Project Failed.');
         return false;
     }
