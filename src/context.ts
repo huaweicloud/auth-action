@@ -1,5 +1,8 @@
 import * as core from '@actions/core';
 
+export const CUSTOM_USER_AGENT = 'DevKit-GitHub:Authenticate to Huawei Cloud';
+export const ENDPOINT_SERVICE_NAME = 'iam';
+
 export interface Inputs {
     accessKey: string;
     secretKey: string;
@@ -15,6 +18,3 @@ export function getInputs(): Inputs {
         projectId: core.getInput('project_id', { required: false }),
     };
 }
-
-export const CUSTOM_USER_AGENT = 'DevKit-GitHub:Authenticate to Huawei Cloud';
-export const ENDPOINT_SERVICE_NAME = 'iam';
