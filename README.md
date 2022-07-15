@@ -26,8 +26,8 @@
     - name: Authenticate to Huawei Cloud
       uses: huaweicloud/auth-action@v1.0.0
       with: 
-          access_key: ${{ secrets.ACCESSKEY }} 
-          secret_key: ${{ secrets.SECRETACCESSKEY }}
+          access_key_id: ${{ secrets.ACCESSKEY }} 
+          secret_access_key: ${{ secrets.SECRETACCESSKEY }}
           region: 'cn-north-4'
     # 下面使用华为云Actions的步骤会自动鉴权
 ```  
@@ -84,8 +84,8 @@ jobs:
       - name: Authenticate to Huawei Cloud
         uses: huaweicloud/auth-action@v1.0.0
         with: 
-            access_key: ${{ secrets.ACCESSKEY }} 
-            secret_key: ${{ secrets.SECRETACCESSKEY }}
+            access_key_id: ${{ secrets.ACCESSKEY }} 
+            secret_access_key: ${{ secrets.SECRETACCESSKEY }}
             region: 'cn-north-4'
             project_id: '<project_id>'
 
