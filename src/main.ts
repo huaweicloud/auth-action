@@ -13,7 +13,7 @@ export async function run() {
         return;
     }
 
-    // 检查AK/SK是否合法
+    // 检查AK/SK是否存在合法
     if (!(await iam.showPermanentAccessKey(inputs))) {
         core.setFailed('AK/SK is not found.');
         return;
