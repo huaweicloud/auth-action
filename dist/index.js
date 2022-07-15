@@ -30,8 +30,10 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.ENDPOINT_SERVICE_NAME = exports.CUSTOM_USER_AGENT = exports.getInputs = void 0;
+exports.getInputs = exports.ENDPOINT_SERVICE_NAME = exports.CUSTOM_USER_AGENT = void 0;
 const core = __importStar(__nccwpck_require__(42186));
+exports.CUSTOM_USER_AGENT = 'DevKit-GitHub:Authenticate to Huawei Cloud';
+exports.ENDPOINT_SERVICE_NAME = 'iam';
 function getInputs() {
     return {
         accessKey: core.getInput('access_key_id', { required: true }),
@@ -41,8 +43,6 @@ function getInputs() {
     };
 }
 exports.getInputs = getInputs;
-exports.CUSTOM_USER_AGENT = 'DevKit-GitHub:Authenticate to Huawei Cloud';
-exports.ENDPOINT_SERVICE_NAME = 'iam';
 //# sourceMappingURL=context.js.map
 
 /***/ }),
@@ -182,8 +182,7 @@ function showPermanentAccessKey(inputs) {
         const request = new iam.ShowPermanentAccessKeyRequest();
         request.accessKey = inputs.accessKey;
         const result = yield client.showPermanentAccessKey(request);
-        console.log(result);
-        if (result.httpStatusCode != 200) {
+        if (result.httpStatusCode !== 200) {
             core.setFailed('Show Permanent Access Key Failed.');
             return false;
         }
@@ -203,8 +202,7 @@ function keystoneShowProject(inputs) {
         }
         const client = getClientBuilder(inputs);
         const result = yield client.keystoneShowProject();
-        console.log(result);
-        if (result.httpStatusCode != 200) {
+        if (result.httpStatusCode !== 200) {
             core.setFailed('Keystone Show Project Failed.');
             return false;
         }
@@ -268,7 +266,7 @@ function run() {
             core.setFailed('input parameters is not correct.');
             return;
         }
-        // 检查AK/SK是否合法
+        // 检查AK/SK是否存在合法
         if (!(yield iam.showPermanentAccessKey(inputs))) {
             core.setFailed('AK/SK is not found.');
             return;
@@ -319,10 +317,10 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getEndpoint = exports.checkRegion = exports.checkProjectId = exports.checkAkSk = exports.checkInputs = void 0;
 const core = __importStar(__nccwpck_require__(42186));
 // 正则校验表达式
-const ACCESS_KEY_REG = RegExp(/^[a-zA-Z0-9]{10,30}$/);
-const SECRET_KEY_REG = RegExp(/^[a-zA-Z0-9]{30,50}$/);
+const ACCESS_KEY_REG = new RegExp(/^[a-zA-Z0-9]{10,30}$/);
+const SECRET_KEY_REG = new RegExp(/^[a-zA-Z0-9]{30,50}$/);
 const PROJECT_ID_REG = new RegExp(/^[a-zA-Z0-9]{16,64}$/);
-const REGION_REG = RegExp(/^[a-zA-Z0-9]{1,5}-[a-zA-Z0-9]+-[1-9]$/);
+const REGION_REG = new RegExp(/^[a-zA-Z0-9]{1,5}-[a-zA-Z0-9]+-[1-9]$/);
 /**
  * 检查每个inputs 属性value是否合法
  * @param inputs
