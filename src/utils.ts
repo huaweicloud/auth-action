@@ -56,3 +56,13 @@ export function checkProjectId(projectId: string): boolean {
 export function checkRegion(region: string): boolean {
     return REGION_REG.test(region);
 }
+
+/**
+ * 获取终端节点
+ * @param region
+ * @param endpointServiceName
+ * @returns
+ */
+export function getEndpoint(region: string, endpointServiceName: string) {
+    return 'https://' + endpointServiceName + '.' + region + '.myhuaweicloud.com';
+}

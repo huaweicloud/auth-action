@@ -1,15 +1,18 @@
 import * as iam from '../src/iam';
 import * as core from '@actions/core';
 
-const mockWithSk = jest.fn();
+const mockWithProjectId = jest.fn();
 const mockShowPermanentAccessKey = jest.fn();
+const mockKeystoneShowProject = jest.fn();
 
 jest.mock('@actions/core');
 jest.mock('@huaweicloud/huaweicloud-sdk-core', () => {
     return {
-        GlobalCredentials: jest.fn(() => ({
+        BasicCredentials: jest.fn(() => ({
             withAk: jest.fn(() => ({
-                withSk: mockWithSk,
+                withSk: jest.fn(() => ({
+                    withProjectId: mockWithProjectId,
+                })),
             })),
         })),
     };
@@ -24,6 +27,7 @@ jest.mock('@huaweicloud/huaweicloud-sdk-iam', () => {
                         withOptions: jest.fn(() => ({
                             build: jest.fn(() => ({
                                 showPermanentAccessKey: mockShowPermanentAccessKey,
+                                keystoneShowProject: mockKeystoneShowProject,
                             })),
                         })),
                     })),
@@ -34,7 +38,7 @@ jest.mock('@huaweicloud/huaweicloud-sdk-iam', () => {
     };
 });
 
-describe('test swr create secret', () => {
+describe('test show permanent access key', () => {
     beforeEach(() => {
         jest.clearAllMocks();
     });
@@ -48,8 +52,8 @@ describe('test swr create secret', () => {
             projectId: '',
             region: 'cn-north-4',
         };
+        expect(mockWithProjectId).not.toHaveBeenCalled();
         expect(await iam.showPermanentAccessKey(input)).toBe(true);
-        expect(mockWithSk).toHaveBeenCalled();
     });
 
     test('test show permanent access key when httpStatusCode is not 200', async () => {
@@ -64,5 +68,53 @@ describe('test swr create secret', () => {
         };
         expect(await iam.showPermanentAccessKey(input)).toBe(false);
         expect(core.setFailed).toHaveBeenCalledTimes(1);
+    });
+});
+
+describe('test keystone show project', () => {
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
+    test('test keystone show project when httpStatusCode is 200', async () => {
+        mockKeystoneShowProject.mockImplementation(() => {
+            return { httpStatusCode: 200 };
+        });
+        const input = {
+            accessKey: '1234567890&*',
+            secretKey: '123456789012345678901234567890',
+            projectId: '1234567890123456',
+            region: 'cn-north-4',
+        };
+
+        expect(await iam.keystoneShowProject(input)).toBe(true);
+        expect(mockWithProjectId).toHaveBeenCalled();
+    });
+
+    test('test keystone show project when httpStatusCode is not 200', async () => {
+        mockKeystoneShowProject.mockImplementation(() => {
+            return { httpStatusCode: 401 };
+        });
+        const input = {
+            accessKey: '1234567890&*',
+            secretKey: '123456789012345678901234567890',
+            projectId: '1234567890123456',
+            region: 'cn-north-4',
+        };
+        expect(await iam.keystoneShowProject(input)).toBe(false);
+        expect(core.setFailed).toHaveBeenCalledTimes(1);
+    });
+
+    test('test keystone show project when project id is empty', async () => {
+        mockKeystoneShowProject.mockImplementation(() => {
+            return { httpStatusCode: 401 };
+        });
+        const input = {
+            accessKey: '1234567890&*',
+            secretKey: '123456789012345678901234567890',
+            projectId: '',
+            region: 'cn-north-4',
+        };
+        expect(await iam.keystoneShowProject(input)).toBe(true);
+        expect(mockKeystoneShowProject).not.toHaveBeenCalled();
     });
 });

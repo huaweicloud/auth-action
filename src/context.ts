@@ -17,3 +17,4 @@ export function getInputs(): Inputs {
 }
 
 export const CUSTOM_USER_AGENT = 'DevKit-GitHub:Authenticate to Huawei Cloud';
+export const ENDPOINT_SERVICE_NAME = 'iam';
