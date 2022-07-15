@@ -2,12 +2,12 @@ import * as core from '@actions/core';
 import * as context from './context';
 
 // 正则校验表达式
-const ACCESS_KEY_REG = RegExp(/^[a-zA-Z0-9]{10,30}$/);
-const SECRET_KEY_REG = RegExp(/^[a-zA-Z0-9]{30,50}$/);
+const ACCESS_KEY_REG = new RegExp(/^[a-zA-Z0-9]{10,30}$/);
+const SECRET_KEY_REG = new RegExp(/^[a-zA-Z0-9]{30,50}$/);
 
 const PROJECT_ID_REG = new RegExp(/^[a-zA-Z0-9]{16,64}$/);
 
-const REGION_REG = RegExp(/^[a-zA-Z0-9]{1,5}-[a-zA-Z0-9]+-[1-9]$/);
+const REGION_REG = new RegExp(/^[a-zA-Z0-9]{1,5}-[a-zA-Z0-9]+-[1-9]$/);
 
 /**
  * 检查每个inputs 属性value是否合法
