@@ -30,18 +30,19 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.CUSTOM_USER_AGENT = exports.getInputs = void 0;
+exports.ENDPOINT_SERVICE_NAME = exports.CUSTOM_USER_AGENT = exports.getInputs = void 0;
 const core = __importStar(__nccwpck_require__(42186));
 function getInputs() {
     return {
-        accessKey: core.getInput('access_key', { required: true }),
-        secretKey: core.getInput('secret_key', { required: true }),
-        projectId: core.getInput('project_id', { required: false }),
+        accessKey: core.getInput('access_key_id', { required: true }),
+        secretKey: core.getInput('secret_access_key', { required: true }),
         region: core.getInput('region', { required: true }),
+        projectId: core.getInput('project_id', { required: false }),
     };
 }
 exports.getInputs = getInputs;
 exports.CUSTOM_USER_AGENT = 'DevKit-GitHub:Authenticate to Huawei Cloud';
+exports.ENDPOINT_SERVICE_NAME = 'iam';
 //# sourceMappingURL=context.js.map
 
 /***/ }),
@@ -93,9 +94,9 @@ const core = __importStar(__nccwpck_require__(42186));
 function exportCredentials(inputs) {
     return __awaiter(this, void 0, void 0, function* () {
         core.setSecret(inputs.accessKey);
-        core.exportVariable('HUAWEI_CLOUD_ACCESS_KEY', inputs.accessKey);
+        core.exportVariable('HUAWEI_CLOUD_ACCESS_KEY_ID', inputs.accessKey);
         core.setSecret(inputs.secretKey);
-        core.exportVariable('HUAWEI_CLOUD_SECRET_KEY', inputs.secretKey);
+        core.exportVariable('HUAWEI_CLOUD_SECRET_ACCESS_KEY', inputs.secretKey);
         core.setSecret(inputs.region);
         core.exportVariable('HUAWEI_CLOUD_REGION', inputs.region);
         if (inputs.projectId) {
@@ -148,11 +149,28 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.showPermanentAccessKey = void 0;
-const core = __importStar(__nccwpck_require__(42186));
+exports.keystoneShowProject = exports.showPermanentAccessKey = exports.getClientBuilder = void 0;
 const context = __importStar(__nccwpck_require__(13842));
+const utils = __importStar(__nccwpck_require__(50918));
+const core = __importStar(__nccwpck_require__(42186));
 const huaweicore = __importStar(__nccwpck_require__(24820));
 const iam = __importStar(__nccwpck_require__(36757));
+function getClientBuilder(inputs) {
+    const credentials = new huaweicore.BasicCredentials()
+        .withAk(inputs.accessKey)
+        .withSk(inputs.secretKey);
+    let credentialsWithProject = credentials;
+    if (inputs.projectId) {
+        credentialsWithProject = credentials.withProjectId(inputs.projectId);
+    }
+    const client = iam.IamClient.newBuilder()
+        .withCredential(credentialsWithProject)
+        .withEndpoint(utils.getEndpoint(inputs.region, context.ENDPOINT_SERVICE_NAME))
+        .withOptions({ customUserAgent: context.CUSTOM_USER_AGENT })
+        .build();
+    return client;
+}
+exports.getClientBuilder = getClientBuilder;
 /**
  * 查询指定永久访问密钥是否存在
  * @param
@@ -160,17 +178,11 @@ const iam = __importStar(__nccwpck_require__(36757));
  */
 function showPermanentAccessKey(inputs) {
     return __awaiter(this, void 0, void 0, function* () {
-        const credentials = new huaweicore.GlobalCredentials()
-            .withAk(inputs.accessKey)
-            .withSk(inputs.secretKey);
-        const client = iam.IamClient.newBuilder()
-            .withCredential(credentials)
-            .withEndpoint(`https://iam.${inputs.region}.myhuaweicloud.com`)
-            .withOptions({ customUserAgent: context.CUSTOM_USER_AGENT })
-            .build();
+        const client = getClientBuilder(inputs);
         const request = new iam.ShowPermanentAccessKeyRequest();
         request.accessKey = inputs.accessKey;
         const result = yield client.showPermanentAccessKey(request);
+        console.log(result);
         if (result.httpStatusCode != 200) {
             core.setFailed('Show Permanent Access Key Failed.');
             return false;
@@ -179,6 +191,27 @@ function showPermanentAccessKey(inputs) {
     });
 }
 exports.showPermanentAccessKey = showPermanentAccessKey;
+/**
+ * 查询项目是否正常
+ * @param
+ * @returns
+ */
+function keystoneShowProject(inputs) {
+    return __awaiter(this, void 0, void 0, function* () {
+        if (!inputs.projectId) {
+            return true;
+        }
+        const client = getClientBuilder(inputs);
+        const result = yield client.keystoneShowProject();
+        console.log(result);
+        if (result.httpStatusCode != 200) {
+            core.setFailed('Keystone Show Project Failed.');
+            return false;
+        }
+        return true;
+    });
+}
+exports.keystoneShowProject = keystoneShowProject;
 //# sourceMappingURL=iam.js.map
 
 /***/ }),
@@ -240,6 +273,11 @@ function run() {
             core.setFailed('AK/SK is not found.');
             return;
         }
+        // 检查projectId是否正常
+        if (!(yield iam.keystoneShowProject(inputs))) {
+            core.setFailed('project_id is not found.');
+            return;
+        }
         yield credential.exportCredentials(inputs);
     });
 }
@@ -278,7 +316,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.checkRegion = exports.checkProjectId = exports.checkAkSk = exports.checkInputs = void 0;
+exports.getEndpoint = exports.checkRegion = exports.checkProjectId = exports.checkAkSk = exports.checkInputs = void 0;
 const core = __importStar(__nccwpck_require__(42186));
 // 正则校验表达式
 const ACCESS_KEY_REG = RegExp(/^[a-zA-Z0-9]{10,30}$/);
@@ -332,6 +370,16 @@ function checkRegion(region) {
     return REGION_REG.test(region);
 }
 exports.checkRegion = checkRegion;
+/**
+ * 获取终端节点
+ * @param region
+ * @param endpointServiceName
+ * @returns
+ */
+function getEndpoint(region, endpointServiceName) {
+    return 'https://' + endpointServiceName + '.' + region + '.myhuaweicloud.com';
+}
+exports.getEndpoint = getEndpoint;
 //# sourceMappingURL=utils.js.map
 
 /***/ }),

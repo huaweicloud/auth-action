@@ -9,9 +9,9 @@ inputs:
     description: "Secret access key"
     required: true
   region:
-  description: '华为云区域，可以在华为云我的凭证获取'
-  required: true
-  default: 'cn-north-4'
+    description: '华为云区域，可以在华为云我的凭证获取'
+    required: true
+    default: 'cn-north-4'
   project_id:
     description: "项目ID，可以在华为云我的凭证获取"
     required: false
