@@ -1,6 +1,6 @@
 # Authenticate to Huawei Cloud
 
-华为云统一鉴权Action。此Action配置访问华为云时的身份凭证AK/SK(Access Key ID/Secret Access Key)，区域region, 项目ID project id环境变量并对访问密钥AKSK进行身份验证，以便在其他GitHub Actions操作中使用。  
+华为云统一鉴权Action。此Action配置访问华为云时的身份凭证AK/SK(Access Key ID/Secret Access Key)，区域region, 项目ID project id环境变量并对访问密钥AK/SK进行身份验证，以便在其他GitHub Actions操作中使用。  
 
 ## 前置条件
 华为云统一鉴权Action需要了解[华为云统一身份认证服务](https://support.huaweicloud.com/iam/index.html)(Identity and Access Management，简称IAM)。  
@@ -61,17 +61,6 @@ jobs:
           local_file_path: 'src1/src2/test1.txt'
           obs_file_path: ''
           operation_type: 'upload'
-      # 下面使用华为云Actions的步骤会自动鉴权
-      - name: deploy serverless function to huaweicloud functiongraph by obs
-        uses: huaweicloud/deploy-functiongraph-action@v1.0
-        with:
-            ak: ${{ secrets.ACCESSKEY }}
-            sk: ${{ secrets.SECRETACCESSKEY }}
-            endpoint: https://functiongraph.cn-north-4.myhuaweicloud.com
-            project_id: '<project_id>'
-            function_urn: urn:fss:cn-north-4:<project_id>:function:default:${{ secrets.FUNCTIONNAME}}:latest
-            function_codetype: obs
-            function_file: "https://huaweihdnbucket.obs.cn-north-4.myhuaweicloud.com/function/publishmarket/index_obs.zip"
 ``` 
 使用后的workflow
 ```yaml
@@ -104,14 +93,6 @@ jobs:
           local_file_path: 'src1/src2/test1.txt'
           obs_file_path: ''
           operation_type: 'upload'
-      # 部署华为云函数
-      - name: deploy serverless function to huaweicloud functiongraph by obs
-        uses: huaweicloud/deploy-functiongraph-action@v1.0
-        with:
-            endpoint: https://functiongraph.cn-north-4.myhuaweicloud.com
-            function_urn: urn:fss:cn-north-4:<project_id>:function:default:${{ secrets.FUNCTIONNAME}}:latest
-            function_codetype: obs
-            function_file: "https://huaweihdnbucket.obs.cn-north-4.myhuaweicloud.com/function/publishmarket/index_obs.zip"
 
 ``` 
-从上面是否使用华为云统一鉴权Action对比可以看出，使用统计鉴权action之后华为云的GitHub Action步骤会自动鉴权,不需要在每个step输入鉴权信息
+从上面是否使用华为云统一鉴权Action对比可以看出，使用统计鉴权action之后华为云的GitHub Action步骤会自动鉴权,不需要在每个action输入鉴权信息
