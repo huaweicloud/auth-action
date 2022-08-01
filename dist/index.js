@@ -1,387 +1,6 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 13842:
-/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
-
-"use strict";
-
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getInputs = exports.ENDPOINT_SERVICE_NAME = exports.CUSTOM_USER_AGENT = void 0;
-const core = __importStar(__nccwpck_require__(42186));
-exports.CUSTOM_USER_AGENT = 'DevKit-GitHub:Authenticate to Huawei Cloud';
-exports.ENDPOINT_SERVICE_NAME = 'iam';
-function getInputs() {
-    return {
-        accessKey: core.getInput('access_key_id', { required: true }),
-        secretKey: core.getInput('secret_access_key', { required: true }),
-        region: core.getInput('region', { required: true }),
-        projectId: core.getInput('project_id', { required: false }),
-    };
-}
-exports.getInputs = getInputs;
-//# sourceMappingURL=context.js.map
-
-/***/ }),
-
-/***/ 2166:
-/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
-
-"use strict";
-
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.exportCredentials = void 0;
-const core = __importStar(__nccwpck_require__(42186));
-/**
- * 华为云凭证设置为加密的环境变量
- * @param inputs
- */
-function exportCredentials(inputs) {
-    return __awaiter(this, void 0, void 0, function* () {
-        core.setSecret(inputs.accessKey);
-        core.exportVariable('HUAWEI_CLOUD_ACCESS_KEY_ID', inputs.accessKey);
-        core.setSecret(inputs.secretKey);
-        core.exportVariable('HUAWEI_CLOUD_SECRET_ACCESS_KEY', inputs.secretKey);
-        core.setSecret(inputs.region);
-        core.exportVariable('HUAWEI_CLOUD_REGION', inputs.region);
-        if (inputs.projectId) {
-            core.setSecret(inputs.projectId);
-            core.exportVariable('HUAWEI_CLOUD_PROJECT_ID', inputs.projectId);
-        }
-        core.info('Huawei Cloud Credentials environment variables have been set');
-    });
-}
-exports.exportCredentials = exportCredentials;
-//# sourceMappingURL=credential.js.map
-
-/***/ }),
-
-/***/ 4705:
-/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
-
-"use strict";
-
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.keystoneShowProject = exports.showPermanentAccessKey = exports.getClientBuilder = void 0;
-const context = __importStar(__nccwpck_require__(13842));
-const utils = __importStar(__nccwpck_require__(50918));
-const core = __importStar(__nccwpck_require__(42186));
-const huaweicore = __importStar(__nccwpck_require__(24820));
-const iam = __importStar(__nccwpck_require__(36757));
-function getClientBuilder(inputs) {
-    const credentials = new huaweicore.BasicCredentials()
-        .withAk(inputs.accessKey)
-        .withSk(inputs.secretKey);
-    let credentialsWithProject = credentials;
-    if (inputs.projectId) {
-        credentialsWithProject = credentials.withProjectId(inputs.projectId);
-    }
-    const client = iam.IamClient.newBuilder()
-        .withCredential(credentialsWithProject)
-        .withEndpoint(utils.getEndpoint(inputs.region, context.ENDPOINT_SERVICE_NAME))
-        .withOptions({ customUserAgent: context.CUSTOM_USER_AGENT })
-        .build();
-    return client;
-}
-exports.getClientBuilder = getClientBuilder;
-/**
- * 查询指定永久访问密钥是否存在
- * @param
- * @returns
- */
-function showPermanentAccessKey(inputs) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const client = getClientBuilder(inputs);
-        const request = new iam.ShowPermanentAccessKeyRequest();
-        request.accessKey = inputs.accessKey;
-        const result = yield client.showPermanentAccessKey(request);
-        if (result.httpStatusCode !== 200) {
-            core.setFailed('Show Permanent Access Key Failed.');
-            return false;
-        }
-        return true;
-    });
-}
-exports.showPermanentAccessKey = showPermanentAccessKey;
-/**
- * 查询项目是否正常
- * @param
- * @returns
- */
-function keystoneShowProject(inputs) {
-    return __awaiter(this, void 0, void 0, function* () {
-        if (!inputs.projectId) {
-            return true;
-        }
-        const client = getClientBuilder(inputs);
-        const result = yield client.keystoneShowProject();
-        if (result.httpStatusCode !== 200) {
-            core.setFailed('Keystone Show Project Failed.');
-            return false;
-        }
-        return true;
-    });
-}
-exports.keystoneShowProject = keystoneShowProject;
-//# sourceMappingURL=iam.js.map
-
-/***/ }),
-
-/***/ 3109:
-/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
-
-"use strict";
-
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.run = void 0;
-const core = __importStar(__nccwpck_require__(42186));
-const utils = __importStar(__nccwpck_require__(50918));
-const context = __importStar(__nccwpck_require__(13842));
-const iam = __importStar(__nccwpck_require__(4705));
-const credential = __importStar(__nccwpck_require__(2166));
-function run() {
-    return __awaiter(this, void 0, void 0, function* () {
-        const inputs = context.getInputs();
-        // 如果参数输入有问题，终止操作
-        if (!utils.checkInputs(inputs)) {
-            core.setFailed('input parameters is not correct.');
-            return;
-        }
-        // 检查AK/SK是否存在合法
-        if (!(yield iam.showPermanentAccessKey(inputs))) {
-            core.setFailed('AK/SK is not found.');
-            return;
-        }
-        // 检查projectId是否正常
-        if (!(yield iam.keystoneShowProject(inputs))) {
-            core.setFailed('project_id is not found.');
-            return;
-        }
-        yield credential.exportCredentials(inputs);
-    });
-}
-exports.run = run;
-run().catch(core.setFailed);
-//# sourceMappingURL=main.js.map
-
-/***/ }),
-
-/***/ 50918:
-/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
-
-"use strict";
-
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getEndpoint = exports.checkRegion = exports.checkProjectId = exports.checkAkSk = exports.checkInputs = void 0;
-const core = __importStar(__nccwpck_require__(42186));
-// 正则校验表达式
-const ACCESS_KEY_REG = new RegExp(/^[a-zA-Z0-9]{10,30}$/);
-const SECRET_KEY_REG = new RegExp(/^[a-zA-Z0-9]{30,50}$/);
-const PROJECT_ID_REG = new RegExp(/^[a-zA-Z0-9]{16,64}$/);
-const REGION_REG = new RegExp(/^[a-zA-Z0-9]{1,5}-[a-zA-Z0-9]+-[1-9]$/);
-/**
- * 检查每个inputs 属性value是否合法
- * @param inputs
- * @returns
- */
-function checkInputs(inputs) {
-    if (!checkAkSk(inputs.accessKey, inputs.secretKey)) {
-        core.info('ak or sk is not correct.');
-        return false;
-    }
-    if (!checkProjectId(inputs.projectId)) {
-        core.info('project id is not correct.');
-        return false;
-    }
-    if (!checkRegion(inputs.region)) {
-        core.info('region is not correct.');
-        return false;
-    }
-    return true;
-}
-exports.checkInputs = checkInputs;
-/**
- * 检查aksk是否合法
- * @param inputs
- * @returns
- */
-function checkAkSk(accessKey, secretKey) {
-    return ACCESS_KEY_REG.test(accessKey) && SECRET_KEY_REG.test(secretKey);
-}
-exports.checkAkSk = checkAkSk;
-/**
- * 检查projectId是否合法
- * @param projectId
- * @returns
- */
-function checkProjectId(projectId) {
-    return projectId ? PROJECT_ID_REG.test(projectId) : true;
-}
-exports.checkProjectId = checkProjectId;
-/**
- * 检查region格式是否合法
- * @returns
- */
-function checkRegion(region) {
-    return REGION_REG.test(region);
-}
-exports.checkRegion = checkRegion;
-/**
- * 获取终端节点
- * @param region
- * @param endpointServiceName
- * @returns
- */
-function getEndpoint(region, endpointServiceName) {
-    return 'https://' + endpointServiceName + '.' + region + '.myhuaweicloud.com';
-}
-exports.getEndpoint = getEndpoint;
-//# sourceMappingURL=utils.js.map
-
-/***/ }),
-
 /***/ 87351:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
@@ -71672,6 +71291,400 @@ exports.fromPromise = function (fn) {
 
 /***/ }),
 
+/***/ 98954:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getInputs = exports.ENDPOINT_SERVICE_NAME = exports.CUSTOM_USER_AGENT = void 0;
+const core = __importStar(__nccwpck_require__(42186));
+exports.CUSTOM_USER_AGENT = 'DevKit-GitHub:Authenticate to Huawei Cloud';
+exports.ENDPOINT_SERVICE_NAME = 'iam';
+function getInputs() {
+    return {
+        accessKey: core.getInput('access_key_id', { required: true }),
+        secretKey: core.getInput('secret_access_key', { required: true }),
+        region: core.getInput('region', { required: true }),
+        projectId: core.getInput('project_id', { required: false }),
+    };
+}
+exports.getInputs = getInputs;
+
+
+/***/ }),
+
+/***/ 7855:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.exportCredentials = void 0;
+const core = __importStar(__nccwpck_require__(42186));
+/**
+ * 华为云凭证设置为加密的环境变量
+ * @param inputs
+ */
+function exportCredentials(inputs) {
+    return __awaiter(this, void 0, void 0, function* () {
+        core.setSecret(inputs.accessKey);
+        core.exportVariable('HUAWEI_CLOUD_ACCESS_KEY_ID', inputs.accessKey);
+        core.setSecret(inputs.secretKey);
+        core.exportVariable('HUAWEI_CLOUD_SECRET_ACCESS_KEY', inputs.secretKey);
+        core.setSecret(inputs.region);
+        core.exportVariable('HUAWEI_CLOUD_REGION', inputs.region);
+        if (inputs.projectId) {
+            core.setSecret(inputs.projectId);
+            core.exportVariable('HUAWEI_CLOUD_PROJECT_ID', inputs.projectId);
+        }
+        core.info('Huawei Cloud Credentials environment variables have been set');
+    });
+}
+exports.exportCredentials = exportCredentials;
+
+
+/***/ }),
+
+/***/ 18804:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.keystoneShowProject = exports.showPermanentAccessKey = exports.getClientBuilder = void 0;
+const context = __importStar(__nccwpck_require__(98954));
+const utils = __importStar(__nccwpck_require__(71314));
+const core = __importStar(__nccwpck_require__(42186));
+const huaweicore = __importStar(__nccwpck_require__(24820));
+const iam = __importStar(__nccwpck_require__(36757));
+function getClientBuilder(inputs) {
+    const credentials = new huaweicore.BasicCredentials()
+        .withAk(inputs.accessKey)
+        .withSk(inputs.secretKey);
+    let credentialsWithProject = credentials;
+    if (inputs.projectId) {
+        credentialsWithProject = credentials.withProjectId(inputs.projectId);
+    }
+    const client = iam.IamClient.newBuilder()
+        .withCredential(credentialsWithProject)
+        .withEndpoint(utils.getEndpoint(inputs.region, context.ENDPOINT_SERVICE_NAME))
+        .withOptions({ customUserAgent: context.CUSTOM_USER_AGENT })
+        .build();
+    return client;
+}
+exports.getClientBuilder = getClientBuilder;
+/**
+ * 查询指定永久访问密钥是否存在
+ * @param
+ * @returns
+ */
+function showPermanentAccessKey(inputs) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const client = getClientBuilder(inputs);
+        const request = new iam.ShowPermanentAccessKeyRequest();
+        request.accessKey = inputs.accessKey;
+        const result = yield client.showPermanentAccessKey(request);
+        if (result.httpStatusCode !== 200) {
+            core.setFailed('Show Permanent Access Key Failed.');
+            return false;
+        }
+        return true;
+    });
+}
+exports.showPermanentAccessKey = showPermanentAccessKey;
+/**
+ * 查询项目是否正常
+ * @param
+ * @returns
+ */
+function keystoneShowProject(inputs) {
+    return __awaiter(this, void 0, void 0, function* () {
+        if (!inputs.projectId) {
+            return true;
+        }
+        const client = getClientBuilder(inputs);
+        const result = yield client.keystoneShowProject();
+        if (result.httpStatusCode !== 200) {
+            core.setFailed('Keystone Show Project Failed.');
+            return false;
+        }
+        return true;
+    });
+}
+exports.keystoneShowProject = keystoneShowProject;
+
+
+/***/ }),
+
+/***/ 70399:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.run = void 0;
+const core = __importStar(__nccwpck_require__(42186));
+const utils = __importStar(__nccwpck_require__(71314));
+const context = __importStar(__nccwpck_require__(98954));
+const iam = __importStar(__nccwpck_require__(18804));
+const credential = __importStar(__nccwpck_require__(7855));
+function run() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const inputs = context.getInputs();
+        // 如果参数输入有问题，终止操作
+        if (!utils.checkInputs(inputs)) {
+            core.setFailed('input parameters is not correct.');
+            return;
+        }
+        // 检查AK/SK是否存在合法
+        if (!(yield iam.showPermanentAccessKey(inputs))) {
+            core.setFailed('AK/SK is not found.');
+            return;
+        }
+        // 检查projectId是否正常
+        if (!(yield iam.keystoneShowProject(inputs))) {
+            core.setFailed('project_id is not found.');
+            return;
+        }
+        yield credential.exportCredentials(inputs);
+    });
+}
+exports.run = run;
+run().catch(core.setFailed);
+
+
+/***/ }),
+
+/***/ 71314:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getEndpoint = exports.checkRegion = exports.checkProjectId = exports.checkAkSk = exports.checkInputs = void 0;
+const core = __importStar(__nccwpck_require__(42186));
+// 正则校验表达式
+const ACCESS_KEY_REG = new RegExp(/^[a-zA-Z0-9]{10,30}$/);
+const SECRET_KEY_REG = new RegExp(/^[a-zA-Z0-9]{30,50}$/);
+const PROJECT_ID_REG = new RegExp(/^[a-zA-Z0-9]{16,64}$/);
+/**
+ * 目前支持region列表
+ */
+const regionArray = [
+    'cn-north-2',
+    'cn-north-4',
+    'cn-north-1',
+    'cn-north-9',
+    'cn-east-2',
+    'cn-east-3',
+    'cn-south-1',
+    'cn-south-2',
+    'cn-southwest-2'
+];
+/**
+ * 检查每个inputs 属性value是否合法
+ * @param inputs
+ * @returns
+ */
+function checkInputs(inputs) {
+    if (!checkAkSk(inputs.accessKey, inputs.secretKey)) {
+        core.info('ak or sk is not correct.');
+        return false;
+    }
+    if (!checkProjectId(inputs.projectId)) {
+        core.info('project id is not correct.');
+        return false;
+    }
+    if (!checkRegion(inputs.region)) {
+        core.info('region is not correct.');
+        return false;
+    }
+    return true;
+}
+exports.checkInputs = checkInputs;
+/**
+ * 检查aksk是否合法
+ * @param inputs
+ * @returns
+ */
+function checkAkSk(accessKey, secretKey) {
+    return ACCESS_KEY_REG.test(accessKey) && SECRET_KEY_REG.test(secretKey);
+}
+exports.checkAkSk = checkAkSk;
+/**
+ * 检查projectId是否合法
+ * @param projectId
+ * @returns
+ */
+function checkProjectId(projectId) {
+    return projectId ? PROJECT_ID_REG.test(projectId) : true;
+}
+exports.checkProjectId = checkProjectId;
+/**
+ * 检查region是否合法
+ * @returns
+ */
+function checkRegion(region) {
+    return regionArray.includes(region);
+}
+exports.checkRegion = checkRegion;
+/**
+ * 获取终端节点
+ * @param region
+ * @param endpointServiceName
+ * @returns
+ */
+function getEndpoint(region, endpointServiceName) {
+    return 'https://' + endpointServiceName + '.' + region + '.myhuaweicloud.com';
+}
+exports.getEndpoint = getEndpoint;
+
+
+/***/ }),
+
 /***/ 39491:
 /***/ ((module) => {
 
@@ -71985,7 +71998,7 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __webpack_exports__ = __nccwpck_require__(3109);
+/******/ 	var __webpack_exports__ = __nccwpck_require__(70399);
 /******/ 	module.exports = __webpack_exports__;
 /******/ 	
 /******/ })()

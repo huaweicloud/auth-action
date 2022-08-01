@@ -7,8 +7,6 @@ const SECRET_KEY_REG = new RegExp(/^[a-zA-Z0-9]{30,50}$/);
 
 const PROJECT_ID_REG = new RegExp(/^[a-zA-Z0-9]{16,64}$/);
 
-const REGION_REG = new RegExp(/^[a-zA-Z0-9]{1,5}-[a-zA-Z0-9]+-[1-9]$/);
-
 /**
  * 目前支持region列表
  */
