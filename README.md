@@ -96,3 +96,17 @@ jobs:
 
 ``` 
 从上面是否使用华为云统一鉴权Action对比可以看出，使用统计鉴权action之后华为云的GitHub Action步骤会自动鉴权,不需要在每个action输入鉴权信息
+
+## Action中使用的公网地址说明
+本action是华为云统一鉴权, 根据用户使用region参数涉及到对应region的华为云iam服务终端节点的公网域名
+```
+1. 华北-北京二	    https://iam.cn-north-2.myhuaweicloud.com	
+2. 华北-北京四	    https://iam.cn-north-4.myhuaweicloud.com		
+3. 华北-北京一	    https://iam.cn-north-1.myhuaweicloud.com
+4. 华北-乌兰察布一	https://iam.cn-north-9.myhuaweicloud.com
+5. 华东-上海二	    https://iam.cn-east-2.myhuaweicloud.com	
+6. 华东-上海一	    https://iam.cn-east-3.myhuaweicloud.com
+7. 华南-广州	      https://iam.cn-south-1.myhuaweicloud.com	
+8. 华南-深圳	      https://iam.cn-south-2.myhuaweicloud.com	
+9. 西南-贵阳一	    https://iam.cn-southwest-2.myhuaweicloud.com
+```

@@ -10,6 +10,21 @@ const PROJECT_ID_REG = new RegExp(/^[a-zA-Z0-9]{16,64}$/);
 const REGION_REG = new RegExp(/^[a-zA-Z0-9]{1,5}-[a-zA-Z0-9]+-[1-9]$/);
 
 /**
+ * 目前支持region列表
+ */
+ const regionArray: string[] = [
+    'cn-north-2',
+    'cn-north-4',
+    'cn-north-1',
+    'cn-north-9',
+    'cn-east-2',
+    'cn-east-3',
+    'cn-south-1',
+    'cn-south-2',
+    'cn-southwest-2'
+  ];
+
+/**
  * 检查每个inputs 属性value是否合法
  * @param inputs
  * @returns
@@ -50,11 +65,11 @@ export function checkProjectId(projectId: string): boolean {
 }
 
 /**
- * 检查region格式是否合法
+ * 检查region是否合法
  * @returns
  */
 export function checkRegion(region: string): boolean {
-    return REGION_REG.test(region);
+    return regionArray.includes(region);
 }
 
 /**
