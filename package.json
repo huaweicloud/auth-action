@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "run": "node ./lib/main.js",
-    "package": "ncc build --source-map --license licenses.txt",
+    "package": "ncc build --license licenses.txt",
     "lint-create": "eslint --init",
     "lint": "eslint src",
     "format": "prettier --write **/*.ts",
