@@ -19,6 +19,12 @@ export async function run() {
         return;
     }
 
+    // 检查projectId是否正常
+    if (!(await iam.keystoneShowProject(inputs))) {
+        core.setFailed('project_id is not found.');
+        return;
+    }
+
     await credential.exportCredentials(inputs);
 }
 

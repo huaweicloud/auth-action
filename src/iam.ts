@@ -31,7 +31,6 @@ export async function keystoneShowRegion(inputs: context.Inputs): Promise<boolea
     request.regionId = inputs.region;
     try {
         const result = await client.keystoneShowRegion(request);
-        console.log(result);
         if (result.httpStatusCode !== 200) {
             core.setFailed('Keystone Show Region Request Error.');
             return false;
@@ -42,4 +41,39 @@ export async function keystoneShowRegion(inputs: context.Inputs): Promise<boolea
     }
 
     return true;
+}
+
+
+/**
+ * 查询项目是否存在相同region
+ * @param
+ * @returns
+ */
+ export async function keystoneShowProject(inputs: context.Inputs): Promise<boolean> {
+    if (!inputs.projectId) {
+        return true;
+    }
+    try {
+        const client = getClientBuilder(inputs);
+        const result = await client.keystoneShowProject();
+        if (result.httpStatusCode !== 200) {
+            core.setFailed('Keystone Show Project Request Error.');
+            return false;
+        } 
+
+        const project = result.project;
+        if (project !== null && project !== undefined) {
+            if (project.name === inputs.region) {
+                core.info('Keystone Show Project successfully.');
+                return true;
+            }
+            core.setFailed('Project not in the Selected Region.');
+        }
+        core.setFailed('Project does not exits.');        
+    } catch (error) {
+        core.setFailed('Keystone Show Project Failed.');
+        return false;
+    }
+    
+    return false;
 }
