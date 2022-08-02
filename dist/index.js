@@ -71439,7 +71439,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.keystoneShowProject = exports.showPermanentAccessKey = exports.getClientBuilder = void 0;
+exports.keystoneShowRegion = exports.getClientBuilder = void 0;
 const context = __importStar(__nccwpck_require__(98954));
 const utils = __importStar(__nccwpck_require__(71314));
 const core = __importStar(__nccwpck_require__(42186));
@@ -71462,44 +71462,31 @@ function getClientBuilder(inputs) {
 }
 exports.getClientBuilder = getClientBuilder;
 /**
- * 查询指定永久访问密钥是否存在
+ * 查询区域判断用户凭证是否合法
  * @param
  * @returns
  */
-function showPermanentAccessKey(inputs) {
+function keystoneShowRegion(inputs) {
     return __awaiter(this, void 0, void 0, function* () {
         const client = getClientBuilder(inputs);
-        const request = new iam.ShowPermanentAccessKeyRequest();
-        request.accessKey = inputs.accessKey;
-        const result = yield client.showPermanentAccessKey(request);
-        if (result.httpStatusCode !== 200) {
-            core.setFailed('Show Permanent Access Key Failed.');
+        const request = new iam.KeystoneShowRegionRequest();
+        request.regionId = inputs.region;
+        try {
+            const result = yield client.keystoneShowRegion(request);
+            console.log(result);
+            if (result.httpStatusCode !== 200) {
+                core.setFailed('Keystone Show Region Request Error.');
+                return false;
+            }
+        }
+        catch (error) {
+            core.setFailed('Keystone Show Region Failed.');
             return false;
         }
         return true;
     });
 }
-exports.showPermanentAccessKey = showPermanentAccessKey;
-/**
- * 查询项目是否正常
- * @param
- * @returns
- */
-function keystoneShowProject(inputs) {
-    return __awaiter(this, void 0, void 0, function* () {
-        if (!inputs.projectId) {
-            return true;
-        }
-        const client = getClientBuilder(inputs);
-        const result = yield client.keystoneShowProject();
-        if (result.httpStatusCode !== 200) {
-            core.setFailed('Keystone Show Project Failed.');
-            return false;
-        }
-        return true;
-    });
-}
-exports.keystoneShowProject = keystoneShowProject;
+exports.keystoneShowRegion = keystoneShowRegion;
 
 
 /***/ }),
@@ -71556,14 +71543,9 @@ function run() {
             core.setFailed('input parameters is not correct.');
             return;
         }
-        // 检查AK/SK是否存在合法
-        if (!(yield iam.showPermanentAccessKey(inputs))) {
-            core.setFailed('AK/SK is not found.');
-            return;
-        }
-        // 检查projectId是否正常
-        if (!(yield iam.keystoneShowProject(inputs))) {
-            core.setFailed('project_id is not found.');
+        // 检查用户凭证是否合法
+        if (!(yield iam.keystoneShowRegion(inputs))) {
+            core.setFailed('user credential is not found.');
             return;
         }
         yield credential.exportCredentials(inputs);
@@ -71622,7 +71604,7 @@ const regionArray = [
     'cn-east-3',
     'cn-south-1',
     'cn-south-2',
-    'cn-southwest-2'
+    'cn-southwest-2',
 ];
 /**
  * 检查每个inputs 属性value是否合法
