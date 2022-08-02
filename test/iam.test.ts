@@ -114,7 +114,6 @@ describe('test show keystone region', () => {
     });
 });
 
-
 describe('test show keystone project', () => {
     beforeEach(() => {
         jest.clearAllMocks();
@@ -122,8 +121,7 @@ describe('test show keystone project', () => {
 
     test('test show keystone project when project id is empty', async () => {
         mockKeystoneShowProject.mockImplementation(() => {
-            return { httpStatusCode: 200,
-                     project: {name: 'cn-north-4'} };
+            return { httpStatusCode: 200, project: { name: 'cn-north-4' } };
         });
         const input = {
             accessKey: '1234567890&*',
@@ -139,8 +137,7 @@ describe('test show keystone project', () => {
 
     test('test show keystone project when httpStatusCode is 200 and project in the same region', async () => {
         mockKeystoneShowProject.mockImplementation(() => {
-            return { httpStatusCode: 200,
-                     project: {name: 'cn-north-4'} };
+            return { httpStatusCode: 200, project: { name: 'cn-north-4' } };
         });
         const input = {
             accessKey: '1234567890&*',
@@ -151,13 +148,11 @@ describe('test show keystone project', () => {
         expect(await iam.keystoneShowProject(input)).toBe(true);
         expect(mockWithProjectId).toHaveBeenCalled();
         expect(core.info).toHaveBeenNthCalledWith(1, 'Keystone Show Project successfully.');
-       
     });
 
     test('test show keystone project when httpStatusCode is 200 and project not in the same region', async () => {
         mockKeystoneShowProject.mockImplementation(() => {
-            return { httpStatusCode: 200,
-                     project: {name: 'cn-north-5'} };
+            return { httpStatusCode: 200, project: { name: 'cn-north-5' } };
         });
         const input = {
             accessKey: '1234567890&*',
@@ -172,8 +167,7 @@ describe('test show keystone project', () => {
 
     test('test show keystone project when httpStatusCode not 200', async () => {
         mockKeystoneShowProject.mockImplementation(() => {
-            return { httpStatusCode: 401,
-                     project: {name: 'cn-north-4'} };
+            return { httpStatusCode: 401, project: { name: 'cn-north-4' } };
         });
         const input = {
             accessKey: '1234567890&*',

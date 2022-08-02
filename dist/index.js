@@ -71439,7 +71439,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.keystoneShowRegion = exports.getClientBuilder = void 0;
+exports.keystoneShowProject = exports.keystoneShowRegion = exports.getClientBuilder = void 0;
 const context = __importStar(__nccwpck_require__(98954));
 const utils = __importStar(__nccwpck_require__(71314));
 const core = __importStar(__nccwpck_require__(42186));
@@ -71473,7 +71473,6 @@ function keystoneShowRegion(inputs) {
         request.regionId = inputs.region;
         try {
             const result = yield client.keystoneShowRegion(request);
-            console.log(result);
             if (result.httpStatusCode !== 200) {
                 core.setFailed('Keystone Show Region Request Error.');
                 return false;
@@ -71487,6 +71486,41 @@ function keystoneShowRegion(inputs) {
     });
 }
 exports.keystoneShowRegion = keystoneShowRegion;
+/**
+ * 查询项目是否存在相同region
+ * @param
+ * @returns
+ */
+function keystoneShowProject(inputs) {
+    return __awaiter(this, void 0, void 0, function* () {
+        if (!inputs.projectId) {
+            return true;
+        }
+        try {
+            const client = getClientBuilder(inputs);
+            const result = yield client.keystoneShowProject();
+            if (result.httpStatusCode !== 200) {
+                core.setFailed('Keystone Show Project Request Error.');
+                return false;
+            }
+            const project = result.project;
+            if (project !== null && project !== undefined) {
+                if (project.name === inputs.region) {
+                    core.info('Keystone Show Project successfully.');
+                    return true;
+                }
+                core.setFailed('Project not in the Selected Region.');
+            }
+            core.setFailed('Project does not exits.');
+        }
+        catch (error) {
+            core.setFailed('Keystone Show Project Failed.');
+            return false;
+        }
+        return false;
+    });
+}
+exports.keystoneShowProject = keystoneShowProject;
 
 
 /***/ }),
@@ -71546,6 +71580,11 @@ function run() {
         // 检查用户凭证是否合法
         if (!(yield iam.keystoneShowRegion(inputs))) {
             core.setFailed('user credential is not found.');
+            return;
+        }
+        // 检查projectId是否正常
+        if (!(yield iam.keystoneShowProject(inputs))) {
+            core.setFailed('project_id is not found.');
             return;
         }
         yield credential.exportCredentials(inputs);
