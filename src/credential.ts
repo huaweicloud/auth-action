@@ -1,5 +1,5 @@
 import * as core from '@actions/core';
-import {Inputs}  from './context';
+import { Inputs } from './context';
 /**
  * 华为云凭证设置为加密的环境变量
  * @param inputs

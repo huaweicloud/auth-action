@@ -2,8 +2,7 @@ import * as iam from '../src/iam';
 import * as core from '@actions/core';
 
 const mockWithProjectId = jest.fn();
-const mockShowPermanentAccessKey = jest.fn();
-const mockKeystoneShowProject = jest.fn();
+const mockKeystoneShowRegion = jest.fn();
 
 jest.mock('@actions/core');
 jest.mock('@huaweicloud/huaweicloud-sdk-core', () => {
@@ -26,24 +25,23 @@ jest.mock('@huaweicloud/huaweicloud-sdk-iam', () => {
                     withEndpoint: jest.fn(() => ({
                         withOptions: jest.fn(() => ({
                             build: jest.fn(() => ({
-                                showPermanentAccessKey: mockShowPermanentAccessKey,
-                                keystoneShowProject: mockKeystoneShowProject,
+                                keystoneShowRegion: mockKeystoneShowRegion,
                             })),
                         })),
                     })),
                 })),
             })),
         },
-        ShowPermanentAccessKeyRequest: jest.fn(),
+        KeystoneShowRegionRequest: jest.fn(),
     };
 });
 
-describe('test show permanent access key', () => {
+describe('test show keystone region', () => {
     beforeEach(() => {
         jest.clearAllMocks();
     });
-    test('test show permanent access key when httpStatusCode is 200', async () => {
-        mockShowPermanentAccessKey.mockImplementation(() => {
+    test('test show keystone region when httpStatusCode is 200', async () => {
+        mockKeystoneShowRegion.mockImplementation(() => {
             return { httpStatusCode: 200 };
         });
         const input = {
@@ -53,11 +51,11 @@ describe('test show permanent access key', () => {
             region: 'cn-north-4',
         };
         expect(mockWithProjectId).not.toHaveBeenCalled();
-        expect(await iam.showPermanentAccessKey(input)).toBe(true);
+        expect(await iam.keystoneShowRegion(input)).toBe(true);
     });
 
     test('test show permanent access key when httpStatusCode is not 200', async () => {
-        mockShowPermanentAccessKey.mockImplementation(() => {
+        mockKeystoneShowRegion.mockImplementation(() => {
             return { httpStatusCode: 401 };
         });
         const input = {
@@ -66,17 +64,12 @@ describe('test show permanent access key', () => {
             projectId: '',
             region: 'cn-north-4',
         };
-        expect(await iam.showPermanentAccessKey(input)).toBe(false);
-        expect(core.setFailed).toHaveBeenCalledTimes(1);
+        expect(await iam.keystoneShowRegion(input)).toBe(false);
+        expect(core.setFailed).toHaveBeenNthCalledWith(1, 'Keystone Show Region Request Error.');
     });
-});
 
-describe('test keystone show project', () => {
-    beforeEach(() => {
-        jest.clearAllMocks();
-    });
-    test('test keystone show project when httpStatusCode is 200', async () => {
-        mockKeystoneShowProject.mockImplementation(() => {
+    test('test show keystone region whit project id', async () => {
+        mockKeystoneShowRegion.mockImplementation(() => {
             return { httpStatusCode: 200 };
         });
         const input = {
@@ -86,27 +79,13 @@ describe('test keystone show project', () => {
             region: 'cn-north-4',
         };
 
-        expect(await iam.keystoneShowProject(input)).toBe(true);
+        expect(await iam.keystoneShowRegion(input)).toBe(true);
         expect(mockWithProjectId).toHaveBeenCalled();
     });
 
-    test('test keystone show project when httpStatusCode is not 200', async () => {
-        mockKeystoneShowProject.mockImplementation(() => {
-            return { httpStatusCode: 401 };
-        });
-        const input = {
-            accessKey: '1234567890&*',
-            secretKey: '123456789012345678901234567890',
-            projectId: '1234567890123456',
-            region: 'cn-north-4',
-        };
-        expect(await iam.keystoneShowProject(input)).toBe(false);
-        expect(core.setFailed).toHaveBeenCalledTimes(1);
-    });
-
-    test('test keystone show project when project id is empty', async () => {
-        mockKeystoneShowProject.mockImplementation(() => {
-            return { httpStatusCode: 401 };
+    test('test show keystone region whithout project id', async () => {
+        mockKeystoneShowRegion.mockImplementation(() => {
+            return { httpStatusCode: 200 };
         });
         const input = {
             accessKey: '1234567890&*',
@@ -114,7 +93,21 @@ describe('test keystone show project', () => {
             projectId: '',
             region: 'cn-north-4',
         };
-        expect(await iam.keystoneShowProject(input)).toBe(true);
-        expect(mockKeystoneShowProject).not.toHaveBeenCalled();
+        expect(await iam.keystoneShowRegion(input)).toBe(true);
+        expect(mockWithProjectId).not.toHaveBeenCalled();
+    });
+
+    test('test show keystone region throw error', async () => {
+        mockKeystoneShowRegion.mockImplementation(() => {
+            throw new Error('Server Error.');
+        });
+        const input = {
+            accessKey: '1234567890&*',
+            secretKey: '123456789012345678901234567890',
+            projectId: '',
+            region: 'cn-north-4',
+        };
+        expect(await iam.keystoneShowRegion(input)).toBe(false);
+        expect(core.setFailed).toHaveBeenNthCalledWith(1, 'Keystone Show Region Failed.');
     });
 });

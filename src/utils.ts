@@ -10,7 +10,7 @@ const PROJECT_ID_REG = new RegExp(/^[a-zA-Z0-9]{16,64}$/);
 /**
  * 目前支持region列表
  */
- const regionArray: string[] = [
+const regionArray: string[] = [
     'cn-north-2',
     'cn-north-4',
     'cn-north-1',
@@ -19,8 +19,8 @@ const PROJECT_ID_REG = new RegExp(/^[a-zA-Z0-9]{16,64}$/);
     'cn-east-3',
     'cn-south-1',
     'cn-south-2',
-    'cn-southwest-2'
-  ];
+    'cn-southwest-2',
+];
 
 /**
  * 检查每个inputs 属性value是否合法

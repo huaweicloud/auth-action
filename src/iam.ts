@@ -21,35 +21,23 @@ export function getClientBuilder(inputs: context.Inputs): iam.IamClient {
 }
 
 /**
- * 查询指定永久访问密钥是否存在
+ * 查询区域判断用户凭证是否合法
  * @param
  * @returns
  */
-export async function showPermanentAccessKey(inputs: context.Inputs): Promise<boolean> {
+export async function keystoneShowRegion(inputs: context.Inputs): Promise<boolean> {
     const client = getClientBuilder(inputs);
-    const request = new iam.ShowPermanentAccessKeyRequest();
-    request.accessKey = inputs.accessKey;
-    const result = await client.showPermanentAccessKey(request);
-    if (result.httpStatusCode !== 200) {
-        core.setFailed('Show Permanent Access Key Failed.');
-        return false;
-    }
-    return true;
-}
-
-/**
- * 查询项目是否正常
- * @param
- * @returns
- */
-export async function keystoneShowProject(inputs: context.Inputs): Promise<boolean> {
-    if (!inputs.projectId) {
-        return true;
-    }
-    const client = getClientBuilder(inputs);
-    const result = await client.keystoneShowProject();
-    if (result.httpStatusCode !== 200) {
-        core.setFailed('Keystone Show Project Failed.');
+    const request = new iam.KeystoneShowRegionRequest();
+    request.regionId = inputs.region;
+    try {
+        const result = await client.keystoneShowRegion(request);
+        console.log(result);
+        if (result.httpStatusCode !== 200) {
+            core.setFailed('Keystone Show Region Request Error.');
+            return false;
+        }
+    } catch (error) {
+        core.setFailed('Keystone Show Region Failed.');
         return false;
     }
 
