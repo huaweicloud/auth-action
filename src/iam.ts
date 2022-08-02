@@ -67,6 +67,7 @@ export async function keystoneShowProject(inputs: context.Inputs): Promise<boole
                 return true;
             }
             core.setFailed('Project not in the Selected Region.');
+            return false;
         }
         core.setFailed('Project does not exits.');
     } catch (error) {

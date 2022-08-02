@@ -71510,6 +71510,7 @@ function keystoneShowProject(inputs) {
                     return true;
                 }
                 core.setFailed('Project not in the Selected Region.');
+                return false;
             }
             core.setFailed('Project does not exits.');
         }
