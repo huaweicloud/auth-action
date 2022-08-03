@@ -71580,12 +71580,12 @@ function run() {
         }
         // 检查用户凭证是否合法
         if (!(yield iam.keystoneShowRegion(inputs))) {
-            core.setFailed('user credential is not found.');
+            core.setFailed('user credential is not correct.');
             return;
         }
         // 检查projectId是否正常
         if (!(yield iam.keystoneShowProject(inputs))) {
-            core.setFailed('project_id is not found.');
+            core.setFailed('project_id is not correct.');
             return;
         }
         yield credential.exportCredentials(inputs);

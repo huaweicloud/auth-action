@@ -47,7 +47,7 @@ describe('mock main', () => {
         expect(iam.keystoneShowRegion).toHaveBeenCalledTimes(1);
 
         expect(iam.keystoneShowProject).toHaveBeenCalledTimes(1);
-        expect(core.setFailed).toHaveBeenNthCalledWith(1, 'project_id is not found.');
+        expect(core.setFailed).toHaveBeenNthCalledWith(1, 'project_id is not correct.');
 
         expect(credential.exportCredentials).not.toHaveBeenCalled();
     });
@@ -63,7 +63,7 @@ describe('mock main', () => {
         expect(utils.checkInputs).toHaveBeenCalledTimes(1);
 
         expect(iam.keystoneShowRegion).toHaveBeenCalledTimes(1);
-        expect(core.setFailed).toHaveBeenNthCalledWith(1, 'user credential is not found.');
+        expect(core.setFailed).toHaveBeenNthCalledWith(1, 'user credential is not correct.');
 
         expect(iam.keystoneShowProject).not.toHaveBeenCalled();
 
