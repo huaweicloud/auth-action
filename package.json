@@ -5,7 +5,6 @@
   "main": "src/main.ts",
   "scripts": {
     "build": "tsc",
-    "run": "node ./lib/main.js",
     "package": "ncc build --license licenses.txt",
     "lint-create": "eslint --init",
     "lint": "eslint src",
@@ -13,7 +12,7 @@
     "format-check": "prettier --check **/*.ts",
     "debug": "ts-node-dev src/main.ts",
     "test": "jest --collectCoverage",
-    "all": "npm run lint && npm run format && npm run build && npm run package"
+    "all": "npm run test && npm run lint && npm run format && npm run build && npm run package"
   },
   "keywords": [
     "HuaweiCloud",
