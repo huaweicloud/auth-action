@@ -1,6 +1,6 @@
 {
   "name": "auth-action",
-  "version": "v1.0.1",
+  "version": "v1.1.0",
   "description": "华为云action统一鉴权",
   "main": "src/main.ts",
   "scripts": {
@@ -15,7 +15,7 @@
     "all": "npm run test && npm run lint && npm run format && npm run build && npm run package"
   },
   "keywords": [
-    "HuaweiCloud",
+    "Huawei Cloud",
     "Authenticate"
   ],
   "devDependencies": {

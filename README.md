@@ -24,7 +24,7 @@
 在GitHub Workflow中添加下面的步骤
 ```yaml
     - name: Authenticate to Huawei Cloud
-      uses: huaweicloud/auth-action@v1.0.0
+      uses: huaweicloud/auth-action@v1.1.0
       with: 
           access_key_id: ${{ secrets.ACCESSKEY }} 
           secret_access_key: ${{ secrets.SECRETACCESSKEY }}
@@ -71,7 +71,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Authenticate to Huawei Cloud
-        uses: huaweicloud/auth-action@v1.0.0
+        uses: huaweicloud/auth-action@v1.1.0
         with: 
             access_key_id: ${{ secrets.ACCESSKEY }} 
             secret_access_key: ${{ secrets.SECRETACCESSKEY }}
