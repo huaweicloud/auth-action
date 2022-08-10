@@ -1,34 +1,23 @@
 {
   "name": "auth-action",
-  "version": "1.0.0",
+  "version": "v1.1.0",
   "description": "华为云action统一鉴权",
-  "main": "lib/main.js",
+  "main": "src/main.ts",
   "scripts": {
     "build": "tsc",
-    "run": "node ./lib/main.js",
-    "package": "ncc build --source-map --license licenses.txt",
+    "package": "ncc build -m --license licenses.txt",
     "lint-create": "eslint --init",
     "lint": "eslint src",
     "format": "prettier --write **/*.ts",
     "format-check": "prettier --check **/*.ts",
     "debug": "ts-node-dev src/main.ts",
     "test": "jest --collectCoverage",
-    "all": "npm run lint && npm run format && npm run build && npm run package"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/huaweicloud/auth-action.git"
+    "all": "npm run test && npm run lint && npm run format && npm run build && npm run package"
   },
   "keywords": [
-    "HuaweiCloud",
+    "Huawei Cloud",
     "Authenticate"
   ],
-  "author": "Chenyt26",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/huaweicloud/auth-action/issues"
-  },
-  "homepage": "https://github.com/huaweicloud/auth-action#readme",
   "devDependencies": {
     "@types/jest": "^28.1.5",
     "@typescript-eslint/eslint-plugin": "^5.30.6",

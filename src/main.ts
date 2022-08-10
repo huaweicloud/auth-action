@@ -13,15 +13,15 @@ export async function run() {
         return;
     }
 
-    // 检查AK/SK是否存在合法
-    if (!(await iam.showPermanentAccessKey(inputs))) {
-        core.setFailed('AK/SK is not found.');
+    // 检查用户凭证是否合法
+    if (!(await iam.keystoneShowRegion(inputs))) {
+        core.setFailed('user credential is not correct.');
         return;
     }
 
     // 检查projectId是否正常
     if (!(await iam.keystoneShowProject(inputs))) {
-        core.setFailed('project_id is not found.');
+        core.setFailed('project_id is not correct.');
         return;
     }
 

@@ -7,7 +7,7 @@ const SECRET_KEY_REG = new RegExp(/^[a-zA-Z0-9]{30,50}$/);
 
 const PROJECT_ID_REG = new RegExp(/^[a-zA-Z0-9]{16,64}$/);
 
-const REGION_REG = new RegExp(/^[a-zA-Z0-9]{1,5}-[a-zA-Z0-9]+-[1-9]$/);
+const REGION_REG = RegExp(/^[a-zA-Z0-9]{1,5}-[a-zA-Z0-9]+-[1-9]$/);
 
 /**
  * 检查每个inputs 属性value是否合法
@@ -50,7 +50,7 @@ export function checkProjectId(projectId: string): boolean {
 }
 
 /**
- * 检查region格式是否合法
+ * 检查region是否合法
  * @returns
  */
 export function checkRegion(region: string): boolean {

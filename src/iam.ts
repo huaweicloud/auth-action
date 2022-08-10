@@ -21,24 +21,30 @@ export function getClientBuilder(inputs: context.Inputs): iam.IamClient {
 }
 
 /**
- * 查询指定永久访问密钥是否存在
+ * 查询区域判断用户凭证是否合法
  * @param
  * @returns
  */
-export async function showPermanentAccessKey(inputs: context.Inputs): Promise<boolean> {
+export async function keystoneShowRegion(inputs: context.Inputs): Promise<boolean> {
     const client = getClientBuilder(inputs);
-    const request = new iam.ShowPermanentAccessKeyRequest();
-    request.accessKey = inputs.accessKey;
-    const result = await client.showPermanentAccessKey(request);
-    if (result.httpStatusCode !== 200) {
-        core.setFailed('Show Permanent Access Key Failed.');
+    const request = new iam.KeystoneShowRegionRequest();
+    request.regionId = inputs.region;
+    try {
+        const result = await client.keystoneShowRegion(request);
+        if (result.httpStatusCode !== 200) {
+            core.setFailed('Keystone Show Region Request Error.');
+            return false;
+        }
+    } catch (error) {
+        core.setFailed('Keystone Show Region Failed.');
         return false;
     }
+
     return true;
 }
 
 /**
- * 查询项目是否正常
+ * 查询项目是否存在相同region
  * @param
  * @returns
  */
@@ -46,12 +52,28 @@ export async function keystoneShowProject(inputs: context.Inputs): Promise<boole
     if (!inputs.projectId) {
         return true;
     }
-    const client = getClientBuilder(inputs);
-    const result = await client.keystoneShowProject();
-    if (result.httpStatusCode !== 200) {
+    try {
+        const client = getClientBuilder(inputs);
+        const result = await client.keystoneShowProject();
+        if (result.httpStatusCode !== 200) {
+            core.setFailed('Keystone Show Project Request Error.');
+            return false;
+        }
+
+        const project = result.project;
+        if (project !== null && project !== undefined) {
+            if (project.name === inputs.region) {
+                core.info('Keystone Show Project successfully.');
+                return true;
+            }
+            core.setFailed('Project not in the Selected Region.');
+            return false;
+        }
+        core.setFailed('Project does not exits.');
+    } catch (error) {
         core.setFailed('Keystone Show Project Failed.');
         return false;
     }
 
-    return true;
+    return false;
 }
